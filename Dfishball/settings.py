@@ -22,11 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '4oan^$+3v7ipo8)xkp5$*hiylz2*2gd%mfq&c_6@n=kxg1k)gn'
 SESSION_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
+# SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
+CSRF_TRUSTED_ORIGINS = ["http://xujiaze.com", "https://xujiaze.com"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
