@@ -1,0 +1,66 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block css_plus %}
+    <link rel="stylesheet" href="{% static '/css/signin.css' %}"/>
+{% endblock css_plus %}
+{% block content %}
+    <main class="form-signin">
+        <form action="{% url 'login' %}" method="post">
+            <h1 class="h3 mb-3 fw-normal">请登录</h1>
+            <div class="form-floating">
+                <input type="text"
+                       class="form-control"
+                       name="username"
+                       id="username"
+                       placeholder="name@example.com"/>
+                <label for="floatingInput">用户名</label>
+            </div>
+            <div class="form-floating">
+                <input type="password"
+                       name="password"
+                       class="form-control"
+                       id="password"
+                       placeholder="Password"/>
+                <label for="floatingPassword">密码</label>
+            </div>
+            {% csrf_token %}
+            <button class="w-100 btn btn-lg btn-primary M_login_btn" type="submit">登录</button>
+            <p class="mt-5 mb-3 text-muted">
+                鱼丸同学成长记录
+            </p>
+            <p>
+                <a href="https://beian.miit.gov.cn/" target="_blank">陕ICP备2022004213号-1</a>
+            </p>
+        </form>
+    </main>
+{% endblock content %}
+{% block js_plus %}
+    {% comment %} <script type='text/javascript'>
+    $(document).ready(function(){
+        $('.M_login_btn').click(function(e){
+            var username = $('#username').val()
+                password = $('#password').val()
+                csrf_token = $("input[name='csrfmiddlewaretoken']").val()
+                payload = {
+                    'username': username,
+                    'password': password,
+                    'csrfmiddlewaretoken': csrf_token,
+                }
+                console.log(payload)
+            $.ajax({
+                headers : {
+                    'Accept' : 'application/json',
+                    'Content-Type' : 'application/json',
+                },
+                url:"{% url 'login' %}" ,
+                type: "POST",
+                data: JSON.stringify(payload),
+                success: function(result){
+                    window.location.href = "{% url 'media:index' %}";
+                },
+            })
+            return false
+        })
+    })
+    </script> {% endcomment %}
+{% endblock js_plus %}

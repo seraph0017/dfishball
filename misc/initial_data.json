@@ -1,0 +1,114 @@
+[{
+    "model": "media.mediagroup",
+    "pk": 1,
+    "fields": {
+        "create_time": "2022-04-21T12:12:00Z",
+        "title": "默认相册",
+        "description": "大家都来看看",
+        "update_time": "2022-04-21T12:12:36.470Z",
+        "is_active": true,
+        "group_level": 2
+    }
+}, {
+    "model": "media.mediagroup",
+    "pk": 2,
+    "fields": {
+        "create_time": "2022-04-21T12:12:00Z",
+        "title": "精选相册",
+        "description": "只有我们可以看的相册",
+        "update_time": "2022-04-21T12:12:53.115Z",
+        "is_active": true,
+        "group_level": 1
+    }
+}, {
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2022-04-21T12:12:36.471Z",
+        "user": 1,
+        "content_type": 7,
+        "object_id": "1",
+        "object_repr": "默认相册",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+}, {
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2022-04-21T12:12:53.117Z",
+        "user": 1,
+        "content_type": 7,
+        "object_id": "2",
+        "object_repr": "精选相册",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+}, {
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2022-04-24T02:59:41.544Z",
+        "user": 1,
+        "content_type": 5,
+        "object_id": "1",
+        "object_repr": "相册管理组",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+}, {
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2022-04-24T03:00:06.547Z",
+        "user": 1,
+        "content_type": 5,
+        "object_id": "2",
+        "object_repr": "相册查看组",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+}, {
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2022-04-24T03:00:43.845Z",
+        "user": 1,
+        "content_type": 6,
+        "object_id": "1",
+        "object_repr": "seraph0017",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Groups\", \"Last login\"]}}]"
+    }
+}, {
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+        "name": "相册管理组",
+        "permissions": [5, 6, 7, 8]
+    }
+}, {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+        "name": "相册查看组",
+        "permissions": [8]
+    }
+}, {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$320000$ve2MEgQw2TcBGBEmoudAnA$s+ZTZ3KLnEMbmYac2QWRbZwN8eawVHO7KYQ0wTyOgtg=",
+        "last_login": "2022-04-24T02:58:00Z",
+        "is_superuser": true,
+        "username": "seraph0017",
+        "first_name": "",
+        "last_name": "",
+        "email": "seraph0017@hotmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2022-04-21T12:12:00Z",
+        "groups": [1],
+        "user_permissions": []
+    }
+}]
