@@ -1,7 +1,13 @@
 from django.urls import path
+from rest_framework import routers
 from . import views
+from . import api
 
 app_name = 'media'
+
+api_router = routers.DefaultRouter()
+api_router.register(r'medias', api.MediaApi)
+api_router.register(r'mediagroups', api.MediaGroupApi)
 
 urlpatterns = [
     path("", views.media_index_handle, name='index'),
