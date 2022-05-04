@@ -28,12 +28,12 @@ CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
-CSRF_TRUSTED_ORIGINS = ["http://xujiaze.com", "https://xujiaze.com"]
+CSRF_TRUSTED_ORIGINS = ["http://xujiaze.com", "https://xujiaze.com", "https://source.xujiaze.com"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["xujiaze.com", "www.xujiaze.com"]
+ALLOWED_HOSTS = ["xujiaze.com", "www.xujiaze.com", "source.xujiaze.com"]
 
 
 # Application definition
