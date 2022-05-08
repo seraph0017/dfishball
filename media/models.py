@@ -87,4 +87,9 @@ class Media(models.Model):
 
     @classmethod
     def get_all_active_media(cls):
-        return cls.objects.filter(is_active=True).all().order_by("-update_time")
+        return cls.objects.filter(is_active=True).all().order_by("-create_time")
+
+
+    @classmethod
+    def get_all_active_photo(cls):
+        return cls.objects.filter(is_active=True, is_pic=True).all().order_by("-create_time")

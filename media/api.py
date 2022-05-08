@@ -11,5 +11,5 @@ class MediaGroupApi(viewsets.ModelViewSet):
 
 class MediaApi(viewsets.ModelViewSet):
 
-    queryset = Media.get_all_active_media()
+    queryset = Media.get_all_active_photo()
     serializer_class = MediaSerializer
