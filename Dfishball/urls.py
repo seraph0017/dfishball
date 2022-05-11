@@ -21,11 +21,13 @@ from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 from .views import password_change_handle
 from media.urls import api_router
+from media.api import MediaGroupListApi, MediaListApi, MediaDetailApi
 from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
     TokenRefreshView,
     TokenVerifyView,
 )
+
+from .api_auth import FTokenObtainPairView
 
 
 urlpatterns = [
@@ -38,11 +40,14 @@ urlpatterns = [
          password_change_handle, name="password_change"),
     path('accounts/', include('django.contrib.auth.urls')),
     # base api
-    path('api/', include(api_router.urls)),
+    # path('api/', include(api_router.urls)),
+    path('api/mediagroup/', MediaGroupListApi.as_view(), name="api_media_group_list"),
+    path('api/media/', MediaListApi.as_view(), name="api_media_list"),
+    path('api/media/<int:media_id>/', MediaDetailApi.as_view(), name="api_media_detail"),
     # session auth
     path('api-auth/', include('rest_framework.urls', namespace="rest_framework")),
     # jwt auth
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/', FTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

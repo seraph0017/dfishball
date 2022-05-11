@@ -41,6 +41,7 @@ class Media(models.Model):
     pic_time = models.DateField(default=datetime.date.today)
 
     upload_file = models.FileField(upload_to=upload_to_place)
+
     upload_local_file_path = models.CharField(max_length=500)
     upload_oss_file_path = models.CharField(max_length=500)
     upload_cdn_file_path = models.CharField(max_length=500)
@@ -89,7 +90,11 @@ class Media(models.Model):
     def get_all_active_media(cls):
         return cls.objects.filter(is_active=True).all().order_by("-create_time")
 
-
     @classmethod
     def get_all_active_photo(cls):
         return cls.objects.filter(is_active=True, is_pic=True).all().order_by("-create_time")
+
+    @classmethod
+    def get_all_active_photo_by_media_group_id(cls, media_group_id, limit=10, offset=0):
+        group = MediaGroup.get_active_group_by_id(media_group_id)
+        return cls.objects.filter(is_active=True, is_pic=True, group=group).all().order_by("-create_time")[offset: offset+limit]

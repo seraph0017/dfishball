@@ -7,6 +7,7 @@ app_name = 'media'
 
 api_router = routers.DefaultRouter()
 api_router.register(r'medias', api.MediaApi)
+# api_router.register(r'mediagroups', api.MediaGroupApi)
 api_router.register(r'mediagroups', api.MediaGroupApi)
 
 urlpatterns = [
