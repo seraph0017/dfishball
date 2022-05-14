@@ -54,7 +54,12 @@ class MediaDetailApi(generics.RetrieveUpdateDestroyAPIView):
         return self.retrieve(request, *args, **kwargs)
 
     def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
+        media_id = kwargs.get("media_id")
+        obj = Media.get_active_media_by_id(media_id)
+        obj.title = request.data.get("title")
+        obj.description = request.data.get("description")
+        obj.save()
+        return Response(dict(message="ok"))
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)

@@ -64,7 +64,7 @@ class Media(models.Model):
     def get_active_media_by_media_group_id_in_page(cls, per_page_limit, page_num, media_group_id):
         media_group = MediaGroup.get_active_group_by_id(media_group_id)
         media_list = cls.objects.filter(
-            is_active=True, group=media_group).all().order_by('update_time')
+            is_active=True, group=media_group).all().order_by('-create_time')
         paginator = Paginator(media_list, per_page_limit)
         page_media = paginator.get_page(page_num)
         return page_media
