@@ -97,4 +97,4 @@ class Media(models.Model):
     @classmethod
     def get_all_active_photo_by_media_group_id(cls, media_group_id, limit=10, offset=0):
         group = MediaGroup.get_active_group_by_id(media_group_id)
-        return cls.objects.filter(is_active=True, is_pic=True, group=group).all().order_by("-create_time")[offset: offset+limit]
+        return cls.objects.filter(is_active=True, is_pic=True, group=group).all().order_by("-pic_time")[offset: offset+limit]

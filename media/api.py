@@ -1,4 +1,4 @@
-from urllib import response
+import datetime
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -58,6 +58,8 @@ class MediaDetailApi(generics.RetrieveUpdateDestroyAPIView):
         obj = Media.get_active_media_by_id(media_id)
         obj.title = request.data.get("title")
         obj.description = request.data.get("description")
+        str_date = request.data.get("pic_time")
+        obj.pic_time = datetime.datetime.strptime(str_date, "%Y-%m-%d")
         obj.save()
         return Response(dict(message="ok"))
 
