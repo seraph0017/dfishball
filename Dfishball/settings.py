@@ -41,6 +41,7 @@ ALLOWED_HOSTS = ["xujiaze.com", "www.xujiaze.com", "source.xujiaze.com"]
 # Application definition
 
 INSTALLED_APPS = [
+    'taggit',
     'media.apps.MediaConfig',
     'django.contrib.admin',
     'django.contrib.auth',

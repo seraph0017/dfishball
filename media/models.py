@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.conf import settings
 
+from taggit.managers import TaggableManager
+
 
 class MediaGroup(models.Model):
 
@@ -57,6 +59,8 @@ class Media(models.Model):
 
     group = models.ForeignKey(MediaGroup, on_delete=models.CASCADE)
 
+    tags = TaggableManager()
+
     def __str__(self):
         return self.title
 
@@ -98,3 +102,8 @@ class Media(models.Model):
     def get_all_active_photo_by_media_group_id(cls, media_group_id, limit=10, offset=0):
         group = MediaGroup.get_active_group_by_id(media_group_id)
         return cls.objects.filter(is_active=True, is_pic=True, group=group).all().order_by("-pic_time")[offset: offset+limit]
+
+    @classmethod
+    def get_all_active_photo_by_tags(cls, media_group_id, tags, limit=10, offset=0):
+        group = MediaGroup.get_active_group_by_id(media_group_id)
+        return cls.objects.filter(is_active=True, is_pic=True, group=group, tags__name__in=tags).all().order_by("-pic_time")[offset: offset+limit]

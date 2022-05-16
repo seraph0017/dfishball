@@ -1,13 +1,15 @@
 import datetime
+import json
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics, mixins
 from django.http import HttpResponse
-from .serializer import MediaGroupSerializer, MediaSerializer
+from .serializer import MediaGroupSerializer, MediaSerializer, TagSerializer
 from .models import MediaGroup, Media
 from django.shortcuts import get_object_or_404
 from devtools import debug
+from taggit.models import Tag
 
 
 class MediaGroupApi(viewsets.ModelViewSet):
@@ -16,11 +18,6 @@ class MediaGroupApi(viewsets.ModelViewSet):
     serializer_class = MediaGroupSerializer
 
 
-class MediaGroupListApi(generics.ListAPIView):
-
-    queryset = MediaGroup.get_all_active_group()
-    serializer_class = MediaGroupSerializer
-
 
 class MediaApi(viewsets.ModelViewSet):
 
@@ -28,13 +25,28 @@ class MediaApi(viewsets.ModelViewSet):
     serializer_class = MediaSerializer
 
 
+
+# using
+class TagListApi(generics.ListAPIView):
+
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+
+
+
+class MediaGroupListApi(generics.ListAPIView):
+
+    queryset = MediaGroup.get_all_active_group()
+    serializer_class = MediaGroupSerializer
+
 class MediaListApi(APIView):
 
     def get(self, request):
         media_group_id = int(request.query_params.get('media_group_id', "1"))
         limit = int(request.query_params.get('limit', "10"))
         offset = int(request.query_params.get('offset', "0"))
-        media_list = Media.get_all_active_photo_by_media_group_id(media_group_id, limit, offset)
+        tags = request.query_params.get('tags', [])
+        media_list = Media.get_all_active_photo_by_tags(media_group_id, json.loads(tags), limit, offset)
         serializer = MediaSerializer(media_list, many=True)
         return Response(serializer.data)
 
@@ -59,6 +71,11 @@ class MediaDetailApi(generics.RetrieveUpdateDestroyAPIView):
         obj.title = request.data.get("title")
         obj.description = request.data.get("description")
         str_date = request.data.get("pic_time")
+        tags = request.data.get("tags", [])
+        for tag in obj.tags.all():
+            obj.tags.remove(tag)
+        for tag in tags:
+            obj.tags.add(tag)
         obj.pic_time = datetime.datetime.strptime(str_date, "%Y-%m-%d")
         obj.save()
         return Response(dict(message="ok"))

@@ -21,7 +21,7 @@ from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 from .views import password_change_handle
 from media.urls import api_router
-from media.api import MediaGroupListApi, MediaListApi, MediaDetailApi
+from media.api import MediaGroupListApi, MediaListApi, MediaDetailApi, TagListApi
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView,
@@ -43,6 +43,7 @@ urlpatterns = [
     # path('api/', include(api_router.urls)),
     path('api/mediagroup/', MediaGroupListApi.as_view(), name="api_media_group_list"),
     path('api/media/', MediaListApi.as_view(), name="api_media_list"),
+    path('api/tag/', TagListApi.as_view(), name="api_tag_list"),
     path('api/media/<int:media_id>/', MediaDetailApi.as_view(), name="api_media_detail"),
     # session auth
     path('api-auth/', include('rest_framework.urls', namespace="rest_framework")),
