@@ -105,5 +105,7 @@ class Media(models.Model):
 
     @classmethod
     def get_all_active_photo_by_tags(cls, media_group_id, tags, limit=10, offset=0):
-        group = MediaGroup.get_active_group_by_id(media_group_id)
-        return cls.objects.filter(is_active=True, is_pic=True, group=group, tags__name__in=tags).all().order_by("-pic_time")[offset: offset+limit]
+        if tags:
+            group = MediaGroup.get_active_group_by_id(media_group_id)
+            return cls.objects.filter(is_active=True, is_pic=True, group=group, tags__name__in=tags).all().order_by("-pic_time")[offset: offset+limit]
+        return cls.get_all_active_photo_by_media_group_id(media_group_id, limit=limit, offset=offset)
