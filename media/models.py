@@ -127,13 +127,16 @@ class Media(models.Model):
                 jpg_file_name = ori_file_name + ".jpeg"
                 full_jpg_file_name = settings.BASE_DIR / \
                     ("upload/" + jpg_file_name)
-                heif_file = pyheif.read(media.upload_file.read())
-                image = Image.frombytes(heif_file.mode, heif_file.size,
+                try:
+                    heif_file = pyheif.read(media.upload_file.read())
+                    image = Image.frombytes(heif_file.mode, heif_file.size,
                                         heif_file.data, "raw", heif_file.mode, heif_file.stride)
-                image.save(full_jpg_file_name, "JPEG")
-                media.upload_local_file_path = jpg_file_name
-                media.is_pic = True
-                media.save()
+                    image.save(full_jpg_file_name, "JPEG")
+                    media.upload_local_file_path = jpg_file_name
+                    media.is_pic = True
+                    media.save()
+                except Exception as e:
+                    print(e)
             else:
                 media.upload_local_file_path = media.upload_file.name
                 media.save()
@@ -147,10 +150,14 @@ class Media(models.Model):
                 jpg_file_name = ori_file_name + ".jpeg"
                 full_jpg_file_name = settings.BASE_DIR / \
                     ("upload/" + jpg_file_name)
-                heif_file = pyheif.read(media.upload_file.read())
-                image = Image.frombytes(heif_file.mode, heif_file.size,
+                try:
+                    heif_file = pyheif.read(media.upload_file.read())
+                    image = Image.frombytes(heif_file.mode, heif_file.size,
                                         heif_file.data, "raw", heif_file.mode, heif_file.stride)
-                image.save(full_jpg_file_name, "JPEG")
-                media.upload_local_file_path = jpg_file_name
-                media.is_pic = True
-                media.save()
+                    image.save(full_jpg_file_name, "JPEG")
+                    media.upload_local_file_path = jpg_file_name
+                    media.is_pic = True
+                    media.save()
+                except Exception as e:
+                    print(e)
+                    continue
