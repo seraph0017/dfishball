@@ -16,11 +16,11 @@ class MediaGroupSerializer(serializers.ModelSerializer):
 class MediaSerializer(serializers.ModelSerializer, TaggitSerializer):
 
     tags = TagListSerializerField()
+
     class Meta:
         model = Media
         fields = ["id", "title", "description", "pic_time",
-                  "upload_user", "group", "upload_file", "is_pic", "create_time", "update_time", "tags"]
-
+                  "upload_user", "group", "upload_file", "is_pic", "create_time", "update_time", "tags", "upload_local_file_path"]
 
 
 class TagSerializer(serializers.ModelSerializer):
