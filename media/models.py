@@ -145,7 +145,7 @@ class Media(models.Model):
     def convert_heic_to_jpg(cls):
         all_media = cls.get_all_active_media()
         for media in all_media:
-            if media.upload_file.name.lower().endswith(".heic"):
+            if media.upload_local_file_path.lower().endswith(".heic"):
                 ori_file_name = "".join(media.upload_file.name.split(".")[:-1])
                 jpg_file_name = ori_file_name + ".jpeg"
                 full_jpg_file_name = settings.BASE_DIR / \
