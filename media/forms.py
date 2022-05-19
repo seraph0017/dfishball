@@ -17,4 +17,4 @@ class MediaUploadForm(forms.Form):
 class MediaEditForm(ModelForm):
     class Meta:
         model = Media
-        fields = ['title', 'description', 'pic_time']
+        fields = ['title', 'description', 'pic_time', 'tags']

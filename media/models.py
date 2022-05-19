@@ -39,8 +39,10 @@ class MediaGroup(models.Model):
 def upload_to_place(instance, filename):
     return "{}/{}".format(instance.group.id, filename)
 
+
 def upload_to_place_in_upload(group_id, filename):
     return "{}/{}".format(group_id, filename)
+
 
 class Media(models.Model):
 
@@ -73,10 +75,15 @@ class Media(models.Model):
         return self.title
 
     @classmethod
-    def get_active_media_by_media_group_id_in_page(cls, per_page_limit, page_num, media_group_id):
+    def get_active_media_by_media_group_id_in_page(cls, per_page_limit, page_num, media_group_id, tags):
         media_group = MediaGroup.get_active_group_by_id(media_group_id)
-        media_list = cls.objects.filter(
-            is_active=True, group=media_group).all().order_by('-create_time')
+        if tags:
+            media_list = cls.objects.filter(
+                is_active=True, group=media_group, tags__name__in=tags).all().order_by('-pic_time')
+        else:
+            media_list = cls.objects.filter(
+                is_active=True, group=media_group).all().order_by('-pic_time')
+
         paginator = Paginator(media_list, per_page_limit)
         page_media = paginator.get_page(page_num)
         return page_media
@@ -130,7 +137,7 @@ class Media(models.Model):
                 try:
                     heif_file = pyheif.read(media.upload_file.read())
                     image = Image.frombytes(heif_file.mode, heif_file.size,
-                                        heif_file.data, "raw", heif_file.mode, heif_file.stride)
+                                            heif_file.data, "raw", heif_file.mode, heif_file.stride)
                     image.save(full_jpg_file_name, "JPEG")
                     media.upload_local_file_path = jpg_file_name
                     media.is_pic = True
@@ -153,7 +160,7 @@ class Media(models.Model):
                 try:
                     heif_file = pyheif.read(media.upload_file.read())
                     image = Image.frombytes(heif_file.mode, heif_file.size,
-                                        heif_file.data, "raw", heif_file.mode, heif_file.stride)
+                                            heif_file.data, "raw", heif_file.mode, heif_file.stride)
                     image.save(full_jpg_file_name, "JPEG")
                     media.upload_local_file_path = jpg_file_name
                     media.is_pic = True

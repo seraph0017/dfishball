@@ -7,8 +7,7 @@
 {% endblock upload_btn %}
 {% block content_main %}
     <main class="bg-light container-sm">
-        <form action="{% url 'media:detail' media.id %}"
-              method="patch">
+        <form action="{% url 'media:detail' media.id %}" method="patch">
             <hr />
             <div class="row">
                 <div class="col text-center">
@@ -63,6 +62,17 @@
                                id="mediaTime"
                                value="{{ media.pic_time|date:'Y-m-d' }}"/>
                     </div>
+                    <div class="mb-3">
+                        <label for="mediaTime" class="form-label">标签</label>
+                        <hr />
+                        {% comment %} {% for tag in media.tags.all %} {% endcomment %}
+                        {% for tag in tag_list %}
+                            <div class="form-check form-check-inline">
+                                <input class="M-tag form-check-input" type="checkbox" value="{{ tag.slug }}"/>
+                                <label class="form-check-label">{{ tag }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
                     <button class="btn btn-primary " id="ok">确认修改</button>
                 </div>
             </div>
@@ -74,6 +84,10 @@
     $(document).ready(function(){
         const csrftoken = Cookies.get("csrftoken");
         $('#ok').click(function(e){
+            var tags = [];
+            $.each($('input[type=checkbox]:checked'), function(){
+                tags.push($(this).val())
+            });
             var mediaTitle = $('#mediaTitle').val();
                 mediaDescription = $('#mediaDescription').val();
                 mediaTime = $('#mediaTime').val();
@@ -81,7 +95,9 @@
                     "title": mediaTitle,
                     "description": mediaDescription,
                     "pic_time": mediaTime,
+                    "tags": tags,
                 };
+            console.log(payload)
             $.ajax({
                 headers : {
                     'X-CSRFToken' : csrftoken,
@@ -89,7 +105,8 @@
                 },
                 url: "{% url 'media:detail' media.id %}",
                 type: 'POST',
-                data: payload,
+                dataType: "json",
+                data: JSON.stringify(payload),
                 success: function(result){
                     console.log(result)
                     window.location.reload()
@@ -97,6 +114,10 @@
             })
             return false
         })
+        {%for tag in media.tags.all%}
+        $("input[value='{{tag}}']").prop("checked",true)
+        {%endfor%}
+
     })
     </script>
 {% endblock js_plus %}

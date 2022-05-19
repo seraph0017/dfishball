@@ -117,6 +117,19 @@
                         </div>
                     </div>
                     <hr />
+                    <div class="btn-group"
+                         role="group"
+                         aria-label="Basic checkbox toggle button group">
+                        {% for tag in tag_list %}
+                            <input type="checkbox"
+                                   class="btn-check M-tag"
+                                   id="{{ tag.slug }}"
+                                   value="{{ tag.slug }}"
+                                   autocomplete="off"/>
+                            <label class="btn btn-outline-primary" for="{{ tag.slug }}">{{ tag }}</label>
+                        {% endfor %}
+                    </div>
+                    <hr />
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                         {% for media in page_media_list %}
                             <div class="col">
@@ -137,9 +150,8 @@
                                         <p class="card-text">
                                             <h5>“{{ media.title }}”</h5>
                                         </p>
-                                        <p class="card-text">
-                                            {{ media.description }}
-                                        </p>
+                                        {% for tag in media.tags.all %}<span class="badge bg-primary">{{ tag }}</span>&nbsp;{% endfor %}
+                                        <hr />
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="btn-group">
                                                 {% if perms.media.change_media %}
@@ -267,7 +279,9 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
-                        <button type="button" id="change_pwd_ok" class="btn btn-primary">提交</button>
+                        <button type="button" id="change_pwd_ok" class="btn btn-primary">
+                            提交
+                        </button>
                     </div>
                 </div>
             </div>
@@ -304,14 +318,6 @@
                 }
             });
 
-            {% comment %} $("#page{{ now_page_num }}").addClass('active');
-            if ({{now_page_num}}=={{total_page_num}}){
-                $("#aft").addClass("disabled");
-            };
-            if ({{now_page_num}}==1){
-                $("#pre").addClass("disabled");
-            }; {% endcomment %}
-
             $("#change_pwd_ok").click(function(e){
                 var old_password = $("#old_password").val();
                     new_password = $("#new_password").val();
@@ -335,7 +341,16 @@
                 })
                 return false
             })
-
+            $('.M-tag').click(function(e){
+                var tags = [];
+                $.each($(".M-tag:checked"), function(e){
+                    tags.push($(this).val())
+                })
+                window.location.href = "{% url 'media:index' %}" + "?media_group=" + {{ current_media_group.id }} +"&tags=" + JSON.stringify(tags)
+            })           
+            {% for tag in current_tags %}            
+            $("input[id='{{tag}}']").prop("checked",true);
+            {% endfor %}
         });
     </script>
 {% endblock js_plus %}
