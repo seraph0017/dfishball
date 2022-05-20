@@ -173,25 +173,25 @@
                             {% if page_media_list.has_previous %}
                                 <li class="page-item" id="pre">
                                     <a class="page-link"
-                                       href="?page=1&media_group={{ current_media_group.id }}">第一页</a>
+                                       href="?page=1&media_group={{ current_media_group.id }}&tags={{ current_tags|safe }}">第一页</a>
                                 </li>
                                 <li class="page-item" id="pre">
                                     <a class="page-link"
-                                       href="?page={{ page_media_list.previous_page_number }}&media_group={{ current_media_group.id }}">前一页</a>
+                                       href="?page={{ page_media_list.previous_page_number }}&media_group={{ current_media_group.id }}&tags={{ current_tags|safe }}">前一页</a>
                                 </li>
                             {% endif %}
                             <li class="page-item" id="page{{ page_num }}">
                                 <a class="page-link"
-                                   href="?page={{ page_media_list.number }}&media_group={{ current_media_group.id }}">{{ page_media_list.number }}/{{ page_media_list.paginator.num_pages }}</a>
+                                   href="?page={{ page_media_list.number }}&media_group={{ current_media_group.id }}&tags={{ current_tags|safe }}">{{ page_media_list.number }}/{{ page_media_list.paginator.num_pages }}</a>
                             </li>
                             {% if page_media_list.has_next %}
                                 <li class="page-item" id="aft">
                                     <a class="page-link"
-                                       href="?page={{ page_media_list.next_page_number }}&media_group={{ current_media_group.id }}">后一页</a>
+                                       href="?page={{ page_media_list.next_page_number }}&media_group={{ current_media_group.id }}&tags={{ current_tags|safe }}">后一页</a>
                                 </li>
                                 <li class="page-item" id="aft">
                                     <a class="page-link"
-                                       href="?page={{ page_media_list.paginator.num_pages }}&media_group={{ current_media_group.id }}">最后一页</a>
+                                       href="?page={{ page_media_list.paginator.num_pages }}&media_group={{ current_media_group.id }}&tags={{ current_tags|safe }}">最后一页</a>
                                 </li>
                             {% endif %}
                         </ul>

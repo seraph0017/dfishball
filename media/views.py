@@ -18,7 +18,9 @@ def media_index_handle(request):
     page_num = request.GET.get("page", 1)
     current_user = request.user
     media_group_id = request.GET.get("media_group", 1)
-    tags = json.loads(request.GET.get("tags", "[]"))
+    ori_tags = request.GET.get("tags")
+    m_tags = ori_tags.replace("\'","\"")
+    tags = json.loads(m_tags) 
     media_group_list = MediaGroup.get_all_active_group()
     current_media_group = MediaGroup.get_active_group_by_id(media_group_id)
     page_media_list = Media.get_active_media_by_media_group_id_in_page(
