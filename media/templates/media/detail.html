@@ -31,7 +31,7 @@
                 <div class="col-4">
                     <label for="img" class="form-label">媒体素材</label>
                     {% if media.is_pic %}
-                        <img src="{{ MEDIA_URL }}{{ media.upload_file }}"
+                        <img src="{{ MEDIA_URL }}{{ media.upload_local_file_path }}"
                              class="rounded img-thumbnail img-fluid"
                              alt="..."
                              height=""
